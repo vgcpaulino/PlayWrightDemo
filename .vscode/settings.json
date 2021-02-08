@@ -1,6 +1,0 @@
-{
-    "mocha-snippets.semicolon": true,
-    "mochaExplorer.debuggerConfig": "Run Selected Spec",
-    "mochaExplorer.files": "./tests/**/*.js",
-    // "mochaExplorer.require": "@babel/register",
-}

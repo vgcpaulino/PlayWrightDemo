@@ -4,7 +4,6 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-        
         {
             "args": [
                 "--config",
@@ -24,33 +23,6 @@
                 "<node_internals>/**"
             ],
             "type": "pwa-node"
-        },
-        {
-            "type": "pwa-chrome",
-            "request": "launch",
-            "name": "Launch Chrome against localhost",
-            "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}"
-        },
-        {
-            "name": "Run Selected Spec Local",
-            "type": "node",
-            "request": "launch",
-            "args": ["${workspaceFolder}/conf/wdio.local.conf.js", "--spec", "${file}"],
-            "cwd": "${workspaceFolder}",
-            "autoAttachChildProcesses": true,
-            "program": "${workspaceRoot}/node_modules/@wdio/cli/bin/wdio.js",
-            "console": "integratedTerminal"
-        },
-        {
-            "name": "Run Selected Spec Docker",
-            "type": "node",
-            "request": "launch",
-            "args": ["${workspaceFolder}/conf/wdio.docker.conf.js", "--spec", "${file}"],
-            "cwd": "${workspaceFolder}",
-            "autoAttachChildProcesses": true,
-            "program": "${workspaceRoot}/node_modules/@wdio/cli/bin/wdio.js",
-            "console": "integratedTerminal"
         }
     ]
 }

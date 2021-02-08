@@ -10,7 +10,7 @@ module.exports = {
   package: './package.json',
   reporter: 'spec',
   slow: 75,
-  timeout: 10000,
+  timeout: 90000,
   ui: 'bdd',
   require: ['@babel/register'],
   recursive: true
