@@ -12,6 +12,10 @@ module.exports = {
   slow: 75,
   timeout: 90000,
   ui: 'bdd',
-  require: ['@babel/register'],
+  require: [
+    '@babel/register', 
+    'fixtures/mochaGlobalFixture.js',
+    'hooks/mochaHooks.js'
+  ],
   recursive: true
 };

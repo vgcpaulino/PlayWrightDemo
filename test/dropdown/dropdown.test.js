@@ -1,5 +1,4 @@
-const playwright = require("playwright");
-const { chromium, firefox, webkit } = require("playwright");
+import { getBrowser } from '../../helpers/browserLauncher.helper';
 
 var browser, page;
 var dropDown;
@@ -7,7 +6,7 @@ var dropDown;
 describe('Dropdown', () => {
 
     beforeEach(async () => {
-        browser = await chromium.launch({ headless: false });
+        browser = await getBrowser();
         page = await browser.newPage();
         await page.goto('https://the-internet.herokuapp.com/dropdown');
         dropDown = await page.$('select[id="dropdown"]');

@@ -1,12 +1,11 @@
-const playwright = require("playwright");
-const { chromium, firefox, webkit } = require("playwright");
+import { getBrowser } from '../../helpers/browserLauncher.helper';
 
 let browser, page;
 
 describe('Element Interaction', () => {
 
   beforeEach(async () => {
-    browser = await chromium.launch({ headless: false });
+    browser = await getBrowser();
     page = await browser.newPage();
   });
 
@@ -47,5 +46,3 @@ describe('Element Interaction', () => {
   });
 
 });
-
-

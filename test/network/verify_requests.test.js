@@ -1,26 +1,29 @@
-const playwright = require("playwright");
-const { chromium, firefox, webkit } = require("playwright");
+import { browserFixture } from '../../fixtures/browser.fixture';
+import { getBrowser } from '../../helpers/browserLauncher.helper';
 
-describe('Verify Requests', () => {
-  for (const browserType of ["chromium", "firefox", "webkit"]) {
+let browser, page;
+browserFixture.forEach(browserType => {
 
-    it(`${browserType}:  Log Requests / Responses`, async () => {
-      // const browser = await chromium.launch({ headless: false });
-      const browser = await playwright[browserType].launch({ headless: false });
-      const page = await browser.newPage();
-      
-      await page.on('request', request => {
-        console.log('Request', request.method(), request.url());
-      });
+    describe('Verify Requests', () => {
+        beforeEach(async () => {
+            browser = await getBrowser(browserType);
+            page = await browser.newPage();
+        });
 
-      await page.on('response', response => {
-          console.log('Response', response.status(), response.url());
-      })
+        it(`${browserType}:  Log Requests / Responses`, async () => {
+            await page.on('request', request => {
+              console.log('Request', request.method(), request.url());
+            });
+            await page.on('response', response => {
+                console.log('Response', response.status(), response.url());
+            });
+            await page.goto("https://danube-webshop.herokuapp.com/");
+        });
 
-      await page.goto("https://danube-webshop.herokuapp.com/");
-      await browser.close();
+        afterEach(async () => {
+            await page.close();
+            await browser.close();
+        });
     });
-  }
+
 });
-
-

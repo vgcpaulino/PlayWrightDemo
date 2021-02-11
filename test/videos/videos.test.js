@@ -1,13 +1,13 @@
 
-import playwright from "playwright";
-import { chromium, firefox, webkit } from "playwright";
+import { getBrowser } from '../../helpers/browserLauncher.helper';
+
 
 let browser, page;
 
 describe('Video', () => {
     const context = 
     beforeEach(async () => {
-        browser = await chromium.launch({ headless: true, args: ['--start-maximized'] });
+        browser = await getBrowser(browserType);
         page = await browser.newPage({ recordVideo: { dir: 'videos/' } });
     });
 

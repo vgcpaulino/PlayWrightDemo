@@ -1,22 +1,20 @@
-const playwright = require("playwright");
-const { chromium, firefox, webkit } = require("playwright");
+import { getBrowser } from '../../helpers/browserLauncher.helper';
 
-let browser, context, page;
+let browser, page;
 
 describe('Cookies', () => {
 
     beforeEach(async () => {
-        browser = await chromium.launch({ headless: false });
+        browser = await getBrowser();
         page = await browser.newPage();
+        await page.goto("http://demo.guru99.com/test/cookie/selenium_aut.php");
     });
 
     it(`Get Cookies`, async () => {
-        await page.goto("http://demo.guru99.com/test/cookie/selenium_aut.php");
         await logAllCookies();
     });
 
     it(`Add New Cookie`, async () => {
-        await page.goto("http://demo.guru99.com/test/cookie/selenium_aut.php");
         const newCookie = [{
             name: "customCookie",
             value: "customValue",
@@ -33,14 +31,12 @@ describe('Cookies', () => {
     });
 
     it(`Delete ALL Cookies`, async () => {
-        await page.goto("http://demo.guru99.com/test/cookie/selenium_aut.php");
         await addCookie();
         await (await page.context()).clearCookies();
         await logAllCookies();
     });
 
     it(`Delete ONE Cookie`, async () => {
-        await page.goto("http://demo.guru99.com/test/cookie/selenium_aut.php");
         await addCookie();
         await logAllCookies();
         // Get all cookies;
@@ -86,3 +82,4 @@ async function addCookie() {
     }];
     await (await page.context()).addCookies(newCookie);
 }
+

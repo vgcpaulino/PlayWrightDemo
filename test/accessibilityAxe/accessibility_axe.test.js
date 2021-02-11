@@ -1,13 +1,12 @@
-const playwright = require("playwright");
-const { chromium, firefox, webkit } = require("playwright");
+import { getBrowser } from '../../helpers/browserLauncher.helper';
 const axeSource = require('axe-core').source;
 
-let browser, context, page;
+let browser, page;
 
 describe('Accessibility Axe', () => {
 
     beforeEach(async () => {
-        browser = await chromium.launch({ headless: false });
+        browser = await getBrowser();
         page = await browser.newPage();
     });
 

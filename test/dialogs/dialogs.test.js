@@ -1,5 +1,4 @@
-const playwright = require("playwright");
-const { chromium, firefox, webkit } = require("playwright");
+import { getBrowser } from '../../helpers/browserLauncher.helper';
 
 let browser, page;
 let alertBtn, confirmationAlertBtn, promptAlertBtn, result;
@@ -7,7 +6,7 @@ let alertBtn, confirmationAlertBtn, promptAlertBtn, result;
 describe('Working with Dialogs.', () => {
 
     beforeEach(async () => {
-        browser = await chromium.launch({ headless: false });
+        browser = await getBrowser();
         page = await browser.newPage();
         await page.goto('https://the-internet.herokuapp.com/javascript_alerts');
 

@@ -1,18 +1,15 @@
-const playwright = require("playwright");
-const { chromium, firefox, webkit } = require("playwright");
+import { getBrowser } from '../../helpers/browserLauncher.helper';
 
 let browser, page;
 
 describe('Element Interaction', () => {
 
     beforeEach(async () => {
-        browser = await chromium.launch({ headless: false });
+        browser = await getBrowser();
         page = await browser.newPage();
     });
 
     it(`Switch to iFrame`, async () => {
-        const browser = await chromium.launch({ headless: false });
-        const page = await browser.newPage();
         await page.goto('https://the-internet.herokuapp.com/iframe');
 
         var iFrameEle = await (await page.$('iframe')).contentFrame();
@@ -38,3 +35,4 @@ function dumpFrameTree(frame, indent) {
         dumpFrameTree(child, indent + '  ');
     }
 }
+

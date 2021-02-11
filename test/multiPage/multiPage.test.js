@@ -1,12 +1,11 @@
-const playwright = require("playwright");
-const { chromium, firefox, webkit } = require("playwright");
+import { getBrowser } from '../../helpers/browserLauncher.helper';
 
 let browser;
 
 describe('Multi Pages', () => {
 
     beforeEach(async () => {
-        browser = await chromium.launch({ headless: false });
+        browser = await getBrowser();
     });
 
     it(`Open two Browser windows`, async () => {

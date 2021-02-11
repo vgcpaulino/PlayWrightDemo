@@ -3,18 +3,16 @@ import { getBrowser, getDevice } from '../../helpers/browserLauncher.helper';
 
 let browser, context, page;
 browserDeviceFixture.forEach(deviceBrowserName => {
-    describe('Emulation', () => {
+    describe('Data Drive - Devices', async () => {
 
         beforeEach(async () => {
             browser = await getBrowser();
             context = await browser.newContext(getDevice(deviceBrowserName));
             page = await context.newPage();
-            await page.goto('https://www.whatsmybrowser.org/');
         });
 
         it(`Device: ${deviceBrowserName}`, async () => {
-            var userAgent = await page.evaluate(() => `Browser User-Agent: ${navigator.userAgent}`);
-            console.log(`${userAgent}`);
+            await page.goto('http://example.com')
         });
 
         afterEach(async () => {
@@ -24,3 +22,4 @@ browserDeviceFixture.forEach(deviceBrowserName => {
     });
 
 });
+

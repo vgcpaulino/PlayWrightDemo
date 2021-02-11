@@ -1,12 +1,10 @@
-const playwright = require("playwright");
-const { chromium, firefox, webkit } = require("playwright");
-
+import { getBrowser } from '../../helpers/browserLauncher.helper';
 let browser, page;
 
 describe('Java Script inside Browser', () => {
 
     beforeEach(async () => {
-        browser = await chromium.launch({ headless: false });
+        browser = await getBrowser();
         page = await browser.newPage();
     });
 

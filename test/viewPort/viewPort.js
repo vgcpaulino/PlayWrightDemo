@@ -1,11 +1,11 @@
-
-import playwright from "playwright";
-import { chromium, firefox, webkit } from "playwright";
+import { browserFixture } from '../../fixtures/browser.fixture';
+import { getBrowser } from '../../helpers/browserLauncher.helper';
 
 let browser, context, page;
 
-describe('View Port', () => {
-    for (const browserType of ["chromium", "firefox", "webkit"]) {
+browserFixture.forEach(browserType => {
+    describe('View Port', () => {
+
         beforeEach(async () => {
             browser = await playwright[browserType].launch({ headless: false });
         });
@@ -14,7 +14,6 @@ describe('View Port', () => {
             context = await browser.newContext({ viewport: null });
             page = await context.newPage();
             await page.goto('https://the-internet.herokuapp.com/');
-            await delay(5000);
             await page.screenshot({ path: `./screenshots/viewPort/${browserType}_null_viewport.png` });
         });
 
@@ -23,18 +22,12 @@ describe('View Port', () => {
             context = await browser.newContext({ viewport: { width: 1920, height: 1080 } }); // Full HD
             page = await context.newPage();
             await page.goto('https://the-internet.herokuapp.com/');
-            await delay(5000);
             await page.screenshot({ path: `./screenshots/viewPort/${browserType}_viewport.png` });
         });
 
         afterEach(async () => {
             await browser.close();
         });
-    }
-});
 
-async function delay(time) {
-    return new Promise(function (resolve) {
-        setTimeout(resolve, time)
     });
-}
+});

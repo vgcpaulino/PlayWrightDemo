@@ -4,8 +4,22 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
-    "test:browser": "mocha ./test/browser"
+    "test": "mocha ./test --recursive=false",
+    "test:all": "mocha ./test",
+    "test:accessibilityAxe": "mocha ./test/accessibilityAxe",
+    "test:browserJavaScript": "mocha ./test/browserJavaScript",
+    "test:cookies": "mocha ./test/cookies",
+    "test:dataDriven": "mocha ./test/dataDriven",
+    "test:dialogs": "mocha ./test/dialogs",
+    "test:emulation": "mocha ./test/emulation",
+    "test:frames": "mocha ./test/frames",
+    "test:geolocation": "mocha ./test/geolocation",
+    "test:keys": "mocha ./test/keys",
+    "test:multiPage": "mocha ./test/multiPage",
+    "test:network": "mocha ./test/network",
+    "test:report": "mocha ./test/report",
+    "test:videoRecord": "mocha ./test/videoRecord",
+    "test:viewPort": "mocha ./test/viewport"
   },
   "keywords": [],
   "author": "",
@@ -17,6 +31,7 @@
     "@babel/preset-env": "^7.12.11",
     "@babel/register": "^7.12.10",
     "axe-webdriverio": "^0.2.0",
+    "dotenv": "^8.2.0",
     "mocha": "^8.2.1",
     "playwright": "^1.8.0"
   }
