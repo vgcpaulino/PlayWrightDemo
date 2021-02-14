@@ -1,12 +1,7 @@
-import { getBrowser } from '../../helpers/browserLauncher.helper';
-
-let browser, page;
 
 describe('Cookies', () => {
 
     beforeEach(async () => {
-        browser = await getBrowser();
-        page = await browser.newPage();
         await page.goto("http://demo.guru99.com/test/cookie/selenium_aut.php");
     });
 
@@ -48,10 +43,6 @@ describe('Cookies', () => {
         // Add all the other cookies;
         await (await page.context()).addCookies(cookiesToKeep);;
         await logAllCookies();
-    });
-
-    afterEach(async () => {
-        await browser.close();
     });
 
 });

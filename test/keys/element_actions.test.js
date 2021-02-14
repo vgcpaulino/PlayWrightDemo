@@ -1,48 +1,47 @@
-import { getBrowser } from '../../helpers/browserLauncher.helper';
+import { LoginPage } from '../../pages/theInternetLogin.page';
+import { KeyPressesPage } from '../../pages/theInternetKeyPresses.page';
+import { getElementAttribute, getElementValue } from '../../helpers/elementAttributes.helper';
 
-let browser, page;
 
 describe('Element Interaction', () => {
 
-  beforeEach(async () => {
-    browser = await getBrowser();
-    page = await browser.newPage();
-  });
+  it(`Type / Click / Get Attributes`, async () => {
+    const loginPage = new LoginPage();
+    await loginPage.openPage();
 
-  it(`Type into Input`, async () => {
-    await page.goto("https://the-internet.herokuapp.com/login");
+    var userNameInput = await loginPage.userNameInput();
+    var userPasswordInput = await loginPage.passwordInput();
+    var loginBtn = await loginPage.loginBtn();
 
-    var userNameInput = await page.$('#username');
-    var userPasswordInput = await page.$('#password');
-    var loginBtn = await page.$('#login > button');
-
+    // Type into input;
     await userNameInput.type('tomsmith');
-    var inputText = await userNameInput.evaluate(e => e.value);
-    var inputAutoFocus = await userNameInput.evaluate(e => e.autofocus);
-    console.log(`Input Text: ${inputText}`);
-    console.log(`Input Auto Focus: ${inputAutoFocus}`);
-
     await userPasswordInput.type('SuperSecretPassword!');
-    await loginBtn.click();
 
-    var loginConfirmation = await page.$('div[id="flash"]');
+    // Get attributes values;
+    var userNameInputText = await getElementValue(userNameInput);
+    var userNameInputAutoFocus = await getElementAttribute(userNameInput, 'autofocus');
+    console.log(`Username Input Text: ${userNameInputText}`);
+    console.log(`Input Auto Focus: ${userNameInputAutoFocus}`);
+
+    // Click;
+    await loginBtn.click();
+    var loginConfirmation = await loginPage.loginConfirmation();
     var isVisible = await loginConfirmation.isVisible();
     console.log(`Login Confirmation is visible: ${isVisible}`);
   });
 
-  it(`Key Press`, async () => {
-    await page.goto("https://the-internet.herokuapp.com/key_presses");
+  it(`Key Press / Text Content`, async () => {
+    const keyPresses = new KeyPressesPage(page);
+    await keyPresses.openPage();
 
-    var input = await page.$('input[id="target"]');
+    var input = await keyPresses.input();
+    var result = await keyPresses.result();
+
+    // Key Press;
     await input.press('Control');
-    var result = await page.$('p[id="result"]');
-
+    // Get Text Content from result;
     var resultText = await result.textContent();
     console.log(`Key Press Result: ${resultText}`);
-  });
-
-  afterEach(async () => {
-    await browser.close();
   });
 
 });

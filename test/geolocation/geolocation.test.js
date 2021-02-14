@@ -3,7 +3,7 @@ const iPhone11 = devices['iPhone 11 Pro'];
 
 describe('Geolocation Test', () => {
     it('Google Maps', async () => {
-        const browser = await webkit.launch({ headless: false});
+        const browser = await webkit.launch({ headless: true});
         const context = await browser.newContext({
             ...iPhone11,
             locale: 'en-US',
@@ -16,7 +16,7 @@ describe('Geolocation Test', () => {
         await page.click('button[class*="ml-button-my-location-fab"]');
         await page.click('button[class*="ml-button-my-location-fab"]');
         await page.waitForRequest(/.*preview\/pwa/);
-        await page.screenshot({ path: 'tempNew.png' });
+        await page.screenshot({ path: `./screenshots/geolocation/maps.png` });
         await page.reload();
         var currentUrl = await page.url();
         console.log(`Current Url: ${currentUrl}`);

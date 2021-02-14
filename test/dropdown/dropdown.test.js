@@ -1,36 +1,21 @@
-import { getBrowser } from '../../helpers/browserLauncher.helper';
+import { DropDownPage } from '../../pages/theInternetDropDownPage.page';
 
-var browser, page;
-var dropDown;
+let dropDownPage;
 
 describe('Dropdown', () => {
 
     beforeEach(async () => {
-        browser = await getBrowser();
-        page = await browser.newPage();
-        await page.goto('https://the-internet.herokuapp.com/dropdown');
-        dropDown = await page.$('select[id="dropdown"]');
-        
+        dropDownPage = new DropDownPage();
+        await dropDownPage.openPage();
     });
 
     it(`Select By Value`, async () => {
-        await dropDown.selectOption('1');
-        var selectedOpt = await getSelectedOptionValue(dropDown);
-        console.log(`Selected Option: ${selectedOpt}`);
+        await dropDownPage.selectOptionById('1');
+        await dropDownPage.logSelectedOptionValue();
     });
 
     it(`Select By Label`, async () => {
-        await dropDown.selectOption({ label: 'Option 2'});
-        var selectedOpt = await getSelectedOptionValue(dropDown);
-        console.log(`Selected Option: ${selectedOpt}`);
+        await dropDownPage.selectOptionByLabel('Option 2');
+        await dropDownPage.logSelectedOptionValue();
     });
-
-    afterEach(async () => {
-        await browser.close();
-    });
-
 });
-
-async function getSelectedOptionValue(dropDownElement) {
-    return await (await dropDownElement.$('option[selected="selected"]')).textContent();
-}

@@ -1,14 +1,6 @@
-import { getBrowser } from '../../helpers/browserLauncher.helper';
-const axeSource = require('axe-core').source;
-
-let browser, page;
+import { source as axeSource } from 'axe-core';
 
 describe('Accessibility Axe', () => {
-
-    beforeEach(async () => {
-        browser = await getBrowser();
-        page = await browser.newPage();
-    });
 
     it(`Get Acessibility Axe Results`, async () => {
         await page.goto('https://www.google.com/');
@@ -29,11 +21,6 @@ describe('Accessibility Axe', () => {
             return result;
         });
         console.log(`Accessibility Violations: ${axeResults.violations.length}`);
-    });
-
-
-    afterEach(async () => {
-        await browser.close();
     });
 
 });

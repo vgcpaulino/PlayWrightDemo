@@ -1,27 +1,17 @@
+import { DropDownPage } from '../../pages/theInternetDropDownPage.page';
 
-import { getBrowser } from '../../helpers/browserLauncher.helper';
-
-
-let browser, page;
+let dropDownPage;
 
 describe('Video', () => {
-    const context = 
+    
     beforeEach(async () => {
-        browser = await getBrowser(browserType);
         page = await browser.newPage({ recordVideo: { dir: 'videos/' } });
+        dropDownPage = new DropDownPage();        
     });
 
     it(`Page Video`, async () => {
-        await page.goto('https://the-internet.herokuapp.com/dropdown');
-        var dropDown = await page.$('select[id="dropdown"]');
-        await dropDown.selectOption('1');
-        var selectedOpt = await getSelectedOptionValue(dropDown);
-        console.log(`Selected Option: ${selectedOpt}`);
-    });
-
-    afterEach(async () => {
-        await page.close();
-        await browser.close();
+        await dropDownPage.openPage();
+        await dropDownPage.selectOptionById('1');
     });
 
 });
