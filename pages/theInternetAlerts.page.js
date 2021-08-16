@@ -1,20 +1,44 @@
+const { ElementHandle, Page } = require('playwright');
 
-export class AlertsPage {
+module.exports = class AlertsPage {
     
-    constructor() { }
-
-    alertBtn = async () => { return await page.$('.example li:nth-child(1) button'); };
-    confirmationAlertBtn = async () => { return await page.$('.example li:nth-child(2) button'); };
-    promptAlertBtn = async () => { return await page.$('.example li:nth-child(3) button'); };
-    result = async () => { return await page.$('p[id="result"]'); };
-
-    async openPage() {
-        await page.goto('https://the-internet.herokuapp.com/javascript_alerts');
+    /**
+     * @param {Page} page 
+     */
+    constructor(page) { 
+        this.page = page;
     }
 
-    async logResultInformation() {
-        var resultText = await (await this.result()).textContent();
-        console.log(`Result Dialog Interaction: ${resultText}`);
+    /**
+     * @returns {ElementHandle}
+     */
+    async alertBtn() { return await this.page.$('.example li:nth-child(1) button'); };
+    
+    /**
+     * @returns {ElementHandle}
+     */
+    async confirmationAlertBtn() { return await this.page.$('.example li:nth-child(2) button'); };
+    
+    /**
+     * @returns {ElementHandle}
+     */
+    async promptAlertBtn() { return await this.page.$('.example li:nth-child(3) button'); };
+    
+    /**
+     * @returns {ElementHandle}
+     */
+    async result() { return await this.page.$('p[id="result"]'); };
+
+    async openPage() {
+        await this.page.goto('https://the-internet.herokuapp.com/javascript_alerts');
+    }
+    
+    /**
+     * 
+     * @returns {String}
+     */
+    async getResultInformation() {
+        return await (await this.result()).textContent();
     }
 
 }

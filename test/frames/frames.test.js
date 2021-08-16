@@ -1,23 +1,32 @@
-import { FramesPage } from '../../pages/theInternetFrames.pages';
+const { test, expect } = require('@playwright/test');
+const FramesPage = require('../../pages/theInternetFrames.pages');
 
 let framesPage;
 
-describe('Element Interaction', () => {
+test.describe('Frames Interaction', () => {
 
-    beforeEach(async () => {
-        framesPage = new FramesPage();
+    test.beforeEach(async ({ page }) => {
+        framesPage = new FramesPage(page);
     });
 
-    it(`Switch to iFrame`, async () => {
+    test(`Switch to iFrame`, async () => {
         await framesPage.openPageIFrames();
         await framesPage.typeInfoTextArea('Testing Frames');
+        
+        const frameText = await (await framesPage.textArea()).innerText();
+        expect(frameText).toBe('Testing FramesYour content goes here.');
     });
 
-    it(`Get iFrame Info`, async () => {
+    test(`Get iFrame Info`, async ({ page }) => {
+        framesPage = new FramesPage(page);
+
         await framesPage.openPageNestedFrames();
-        await framesPage.logAllPageFrames();
+
+        const mainFrame = page.mainFrame();
+        const arrayFrames = mainFrame.childFrames();
+    
+        const childFrame = arrayFrames[0].childFrames();
+        expect(childFrame.length).toBe(3);
     });
 
 });
-
-

@@ -1,21 +1,23 @@
-import { DropDownPage } from '../../pages/theInternetDropDownPage.page';
+const { test, expect } = require('@playwright/test');
+const DropDownPage = require('../../pages/theInternetDropDownPage.page');
 
 let dropDownPage;
 
-describe('Dropdown', () => {
+test.describe('Dropdown', () => {
 
-    beforeEach(async () => {
-        dropDownPage = new DropDownPage();
+    test.beforeEach(async ({ page }) => {
+        dropDownPage = new DropDownPage(page);
         await dropDownPage.openPage();
     });
 
-    it(`Select By Value`, async () => {
+    test(`Select By Value`, async () => {
         await dropDownPage.selectOptionById('1');
-        await dropDownPage.logSelectedOptionValue();
+        expect(await dropDownPage.getSelectedOptionValue()).toBe('Option 1');
     });
 
-    it(`Select By Label`, async () => {
+    test(`Select By Label`, async () => {
         await dropDownPage.selectOptionByLabel('Option 2');
-        await dropDownPage.logSelectedOptionValue();
+        expect(await dropDownPage.getSelectedOptionValue()).toBe('Option 2');
     });
+
 });

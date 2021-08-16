@@ -1,36 +1,46 @@
+const { ElementHandle, Frame, Page } = require('playwright');
 
-export class FramesPage {
+module.exports = class FramesPage {
 
-    constructor() { }
+    /**
+     * @param {Page} page 
+     */
+    constructor(page) { 
+        this.page = page;
+    }
 
     /////////////////////////////////////////////////////////////////////////////////
-    iFrame = async () => { return await page.$('iframe'); };
-    iFrameContent = async () => { return await (await this.iFrame()).contentFrame(); };
-    textArea = async () => { return await (await this.iFrameContent()).$('body[id="tinymce"]'); };
+    /**
+     * @returns {ElementHandle}
+     */
+    async iFrame() { return await this.page.$('iframe'); };
+    
+    /**
+     * @returns {ElementHandle}
+     */
+    async iFrameContent() { return await (await this.iFrame()).contentFrame(); };
+    
+    /**
+     * @returns {ElementHandle}
+     */
+    async textArea() { return await (await this.iFrameContent()).$('body[id="tinymce"]'); };
 
     async openPageIFrames() {
-        await page.goto('https://the-internet.herokuapp.com/iframe');
+        await this.page.goto('https://the-internet.herokuapp.com/iframe');
     }
 
     async typeInfoTextArea(text) {
-        await (await this.textArea()).type('Testing Frames');
+        await (await this.textArea()).type(text);
     }
 
     /////////////////////////////////////////////////////////////////////////////////
     async openPageNestedFrames() {
-        await page.goto('https://the-internet.herokuapp.com/nested_frames');
+        await this.page.goto('https://the-internet.herokuapp.com/nested_frames');
     }
 
-    pageMainFrame = async () => { await page.mainFrame(); };
+    /**
+     * @returns {Frame}
+     */
+    async pageMainFrame() { return this.page.mainFrame(); };
 
-    async logAllPageFrames() {
-        iterateFramesTree(this.pageMainFrame());
-    }
-}
-
-async function iterateFramesTree(frame, indent) {
-    console.log(indent + frame.url());
-    for (const child of frame.childFrames()) {
-        dumpFrameTree(child, indent + '  ');
-    }
 }

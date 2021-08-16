@@ -1,76 +1,39 @@
+const { test, expect } = require('@playwright/test');
 
-describe('Cookies', () => {
+test.describe('Cookies', () => {
 
-    beforeEach(async () => {
+    test('Get all Cookies', async ({ context, page }) => {
+        await page.goto('https://www.guru99.com/');
+        const cookies = await context.cookies();
+        expect(cookies.length).toBeGreaterThan(0);
+    });
+
+    test('Add new Cookie', async ({ context, page }) => {
         await page.goto("http://demo.guru99.com/test/cookie/selenium_aut.php");
-    });
 
-    it(`Get Cookies`, async () => {
-        await logAllCookies();
-    });
-
-    it(`Add New Cookie`, async () => {
-        const newCookie = [{
+        const browserCookies = await context.cookies();
+        browserCookies.push({
             name: "customCookie",
             value: "customValue",
-            url: "", // Optional
-            domain: ".guru99.com", // Optional
-            path: '/', // Optional
-            expires: 2524611600, // Optional
-            httpOnly: true, // Optional
-            secure: true, // Optional
-            sameSite: 'Strict' // Optional "Strict"|"Lax"|"None"
-        }];
-        await (await page.context()).addCookies(newCookie);
-        await logAllCookies();
+            domain: ".guru99.com",
+            path: '/',
+            sameSite: 'Lax'
+        });
+
+        await context.addCookies(browserCookies);
+        const cookies = await context.cookies();
+        const cookie = cookies.filter(cookie => cookie.name === 'customCookie')[0];
+
+        expect(cookie.name).toBe('customCookie');
     });
 
-    it(`Delete ALL Cookies`, async () => {
-        await addCookie();
-        await (await page.context()).clearCookies();
-        await logAllCookies();
-    });
+    test('Delete ALL Cookies', async ({ context, page }) => {
+        await page.goto("http://demo.guru99.com/test/cookie/selenium_aut.php");
 
-    it(`Delete ONE Cookie`, async () => {
-        await addCookie();
-        await logAllCookies();
-        // Get all cookies;
-        const cookies = await getAllCookies();
-        // Get all cookies from the variable execpt the one that will be removed;
-        var cookiesToKeep = cookies.filter(cookie => cookie.name != 'customCookie');
-        // Remove all cookies;
-        await (await page.context()).clearCookies();
-        // Add all the other cookies;
-        await (await page.context()).addCookies(cookiesToKeep);;
-        await logAllCookies();
+        await context.clearCookies();
+
+        const cookiesAfter = await context.cookies();
+        expect(cookiesAfter.length).toBe(0);
     });
 
 });
-
-async function getAllCookies() {
-    return await (await page.context()).cookies();
-}
-
-async function logAllCookies() {
-    var cookies = await getAllCookies();
-    console.log(`Qty of Cookies: ${cookies.length}`);
-    cookies.forEach(cookie => {
-        console.log(`Cookie Name: ${cookie.name} || Cookie Value: ${cookie.value}`);
-    });
-}
-
-async function addCookie() {
-    const newCookie = [{
-        name: "customCookie",
-        value: "customValue",
-        url: "", // Optional
-        domain: ".guru99.com", // Optional
-        path: '/', // Optional
-        expires: 2524611600, // Optional
-        httpOnly: true, // Optional
-        secure: true, // Optional
-        sameSite: 'Strict' // Optional "Strict"|"Lax"|"None"
-    }];
-    await (await page.context()).addCookies(newCookie);
-}
-

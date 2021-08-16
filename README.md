@@ -14,6 +14,3 @@ docker-compose up
 
 ## Packages:  
 [Playwright](https://github.com/microsoft/playwright).  
-[Playwright Docker](https://github.com/microsoft/playwright/blob/master/utils/docker/Dockerfile.bionic).  
-[Jest Playwright](https://github.com/playwright-community/jest-playwright).  
-[Babel - JavaScript Compiler](https://babeljs.io/).

@@ -1,36 +1,64 @@
-import { AlertsPage } from '../../pages/theInternetAlerts.page';
-import { dialogAccept, dialogDismiss, dialogType } from '../../helpers/dialogs.helper';
+const { test, expect } = require('@playwright/test');
+const AlertsPage = require('../../pages/theInternetAlerts.page');
 
 let dialogsPage;
 
-describe('Working with Dialogs.', () => {
-
-    beforeEach(async () => {
-        dialogsPage = new AlertsPage();
+test.describe('Working with Dialogs.', () => {
+    
+    test.beforeEach(async ({ page }) => {
+        dialogsPage = new AlertsPage(page);
         await dialogsPage.openPage();
     });
 
-    it(`Alert`, async () => {
-        await dialogAccept();
+    test('Alert', async ({ page }) => {
+        let infoDialog;
+        page.on('dialog', async dialog => {
+            infoDialog = {
+                type: dialog.type(),
+                defaultValue: dialog.defaultValue(),
+                message: dialog.message(),
+            };
+            dialog.accept();
+        });
         await (await dialogsPage.alertBtn()).click();
+        
+        expect(infoDialog).toMatchObject({ type: 'alert', defaultValue: '', message: 'I am a JS Alert' });
     });
 
-    it(`Confirmation Alert - Accept`, async () => {
-        await dialogAccept();
+    test('Confirmation Alert - Accept', async ({ page }) => {
+        let infoDialog;
+
+        page.on('dialog', async dialog => {
+            infoDialog = {
+                type: dialog.type(),
+                defaultValue: dialog.defaultValue(),
+                message: dialog.message(),
+            };
+            dialog.accept();
+        });
         await (await dialogsPage.confirmationAlertBtn()).click();
-        await dialogsPage.logResultInformation();
+        const result = await dialogsPage.getResultInformation();
+
+        expect(result).toBe('You clicked: Ok');
+        expect(infoDialog).toMatchObject({ type: 'confirm', defaultValue: '', message: 'I am a JS Confirm' });
     });
 
-    it(`Confirmation Alert - Dismiss`, async () => {
-        await dialogDismiss();
+    test('Confirmation Alert - Dismiss', async ({ page }) => {
+        let infoDialog;
+        
+        page.on('dialog', async dialog => {
+            infoDialog = {
+                type: dialog.type(),
+                defaultValue: dialog.defaultValue(),
+                message: dialog.message(),
+            };
+            dialog.dismiss();
+        });
         await (await dialogsPage.confirmationAlertBtn()).click();
-        await dialogsPage.logResultInformation();
-    });
+        const result = await dialogsPage.getResultInformation();
 
-    it(`Prompt Text Alert`, async () => {
-        await dialogType('Testing!');
-        await (await dialogsPage.promptAlertBtn()).click();
-        await dialogsPage.logResultInformation();
+        expect(result).toBe('You clicked: Cancel');
+        expect(infoDialog).toMatchObject({ type: 'confirm', defaultValue: '', message: 'I am a JS Confirm' });
     });
 
 });

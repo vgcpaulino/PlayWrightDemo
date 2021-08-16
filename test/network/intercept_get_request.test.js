@@ -1,7 +1,8 @@
+const { test, expect } = require('@playwright/test');
 
-describe('Verify Requests', () => {
+test.describe('Verify Requests', () => {
 
-    it(`${browserName}: Intercept`, async () => {
+    test(`Intercept`, async ({ page }) => {
         const mockResponseObject = [
             {
                 id: 1,
@@ -20,13 +21,11 @@ describe('Verify Requests', () => {
             })
         );
         await page.goto("https://danube-webshop.herokuapp.com/");
-        await page.screenshot({ path: `./screenshots/network/${browserName}_intercept.png` });
-    });
+        await page.screenshot({ path: `./screenshots/network/_intercept.png` });
 
-    it(`${browserName}: Intercept`, async () => {
-        await page.goto("https://danube-webshop.herokuapp.com/");
-        await page.screenshot({ path: `./screenshots/network/${browserName}_without_intercept.png` });
+        const locator = page.locator('li[class="preview"]');
+        await expect(locator).toHaveCount(1);
+        await expect(locator).toHaveText('How to Mock a Response A. Friend ★★★★★ $0.00');
     });
-
 
 });

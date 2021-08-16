@@ -1,47 +1,43 @@
-import { LoginPage } from '../../pages/theInternetLogin.page';
-import { KeyPressesPage } from '../../pages/theInternetKeyPresses.page';
-import { getElementAttribute, getElementValue } from '../../helpers/elementAttributes.helper';
+const { test, expect } = require('@playwright/test');
+const LoginPage = require('../../pages/theInternetLogin.page');
+const KeyPressesPage = require('../../pages/theInternetKeyPresses.page');
+const { getElementAttribute, getElementValue } = require('../../helpers/elementAttributes.helper');
 
+test.describe('Element Interaction', () => {
 
-describe('Element Interaction', () => {
-
-  it(`Type / Click / Get Attributes`, async () => {
-    const loginPage = new LoginPage();
+  test(`Type / Click / Get Attributes`, async ({ page }) => {
+    const loginPage = new LoginPage(page);
     await loginPage.openPage();
 
-    var userNameInput = await loginPage.userNameInput();
-    var userPasswordInput = await loginPage.passwordInput();
-    var loginBtn = await loginPage.loginBtn();
+    const userNameInput = await loginPage.userNameInput();
+    const userPasswordInput = await loginPage.passwordInput();
+    const loginBtn = await loginPage.loginBtn();
 
-    // Type into input;
     await userNameInput.type('tomsmith');
     await userPasswordInput.type('SuperSecretPassword!');
 
-    // Get attributes values;
-    var userNameInputText = await getElementValue(userNameInput);
-    var userNameInputAutoFocus = await getElementAttribute(userNameInput, 'autofocus');
-    console.log(`Username Input Text: ${userNameInputText}`);
-    console.log(`Input Auto Focus: ${userNameInputAutoFocus}`);
+    const userNameInputText = await getElementValue(userNameInput);
+    expect(userNameInputText).toBe('tomsmith');
 
-    // Click;
+    const userNameInputAutoFocus = await getElementAttribute(page, userNameInput, 'autofocus');
+    expect(userNameInputAutoFocus).toBeFalsy();
+
     await loginBtn.click();
-    var loginConfirmation = await loginPage.loginConfirmation();
-    var isVisible = await loginConfirmation.isVisible();
-    console.log(`Login Confirmation is visible: ${isVisible}`);
+    const loginConfirmation = await loginPage.loginConfirmation();
+    const isVisible = await loginConfirmation.isVisible();
+    expect(isVisible).toBeTruthy();
   });
 
-  it(`Key Press / Text Content`, async () => {
+  test(`Key Press / Text Content`, async ({ page }) => {
     const keyPresses = new KeyPressesPage(page);
     await keyPresses.openPage();
 
-    var input = await keyPresses.input();
-    var result = await keyPresses.result();
-
-    // Key Press;
+    const input = await keyPresses.input();
     await input.press('Control');
-    // Get Text Content from result;
-    var resultText = await result.textContent();
-    console.log(`Key Press Result: ${resultText}`);
+    
+    const result = await keyPresses.result();
+    const resultText = await result.textContent();
+    expect(resultText).toBe('You entered: CONTROL');
   });
 
 });

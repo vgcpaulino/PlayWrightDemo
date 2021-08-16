@@ -1,12 +1,23 @@
+const { ElementHandle, Page } = require('playwright');
 
-export class DropDownPage {
+module.exports = class DropDownPage {
     
-    constructor() { }
+    /**
+     * @param {Page} page 
+     */
+    constructor(page) {
+        this.page = page;
+    }
 
-    dropdown = async () => { return await page.$('select[id="dropdown"]'); };
+    /**
+     * @returns {ElementHandle}
+     */
+    async dropdown() { 
+        return await this.page.waitForSelector('select[id="dropdown"]'); 
+    };
 
     async openPage() {
-        await page.goto('https://the-internet.herokuapp.com/dropdown');
+        await this.page.goto('https://the-internet.herokuapp.com/dropdown');
     }
 
     async selectOptionById(id) {
@@ -17,12 +28,11 @@ export class DropDownPage {
         await selectOption(await this.dropdown(), { label: label});
     }
 
-    async logSelectedOptionValue() {
-        var dropDown = await this.dropdown();
-        var selectedOpt = await (await dropDown.$('option[selected="selected"]')).textContent();
-        console.log(`Selected Option: ${selectedOpt}`);
-    }
-    
+    async getSelectedOptionValue() {
+        const dropDown = await this.dropdown();
+        const selectedOpt = await (await dropDown.$('option[selected="selected"]')).textContent();
+        return selectedOpt;
+    }    
 }
 
 async function selectOption(element, option) {

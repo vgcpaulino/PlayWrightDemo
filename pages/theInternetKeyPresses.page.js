@@ -1,13 +1,26 @@
+const { ElementHandle, Page } = require('playwright');
 
-export class KeyPressesPage {
+module.exports = class KeyPressesPage {
     
-    constructor() { }
+    /**
+     * @param {Page} page 
+     */
+    constructor(page) {
+        this.page = page;
+    }
 
-    input = async () => { return await page.$('input[id="target"]'); };
-    result = async () => { return await page.$('p[id="result"]'); };
+    /**
+     * @returns {ElementHandle}
+     */
+    async input() { return await this.page.$('input[id="target"]'); };
+    
+    /**
+     * @returns {ElementHandle}
+     */
+    async result() { return await this.page.$('p[id="result"]'); };
 
     async openPage() {
-        await page.goto("https://the-internet.herokuapp.com/key_presses");
+        await this.page.goto("https://the-internet.herokuapp.com/key_presses");
     }
 
     async pressKeyLogResult(key) {

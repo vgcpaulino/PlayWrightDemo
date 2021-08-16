@@ -1,15 +1,36 @@
+const { ElementHandle, Page } = require('playwright');
 
-export class LoginPage {
+module.exports = class LoginPage {    
     
-    constructor() { }
+    /**
+     * @param {Page} page 
+     */
+    constructor(page) { 
+        this.page = page;
+    }
 
-    userNameInput = async () => { return await page.$('#username'); };
-    passwordInput = async () => { return await page.$('#password'); };
-    loginBtn = async () => { return await page.$('#login > button'); };
-    loginConfirmation = async () => { return await page.$('div[id="flash"]'); };
+    /**
+     * @returns {ElementHandle}
+     */
+    async userNameInput() { return await this.page.waitForSelector('#username'); };
+    
+    /**
+     * @returns {ElementHandle}
+     */
+    async passwordInput() { return await this.page.waitForSelector('#password'); };
+    
+    /**
+     * @returns {ElementHandle}
+     */
+    async loginBtn() { return await this.page.waitForSelector('#login > button'); };
+    
+    /**
+     * @returns {ElementHandle}
+     */
+    async loginConfirmation() { return await this.page.waitForSelector('div[id="flash"]'); };
 
     async openPage() {
-        await page.goto("https://the-internet.herokuapp.com/login");
+        await this.page.goto("https://the-internet.herokuapp.com/login");
     }
 
 }

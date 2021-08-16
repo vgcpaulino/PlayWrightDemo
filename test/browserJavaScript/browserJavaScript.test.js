@@ -1,10 +1,11 @@
+const { test, expect } = require('@playwright/test');
 
-describe('Java Script inside Browser', () => {
-
-    it(`Navigator`, async () => {
+test.describe('Java Script inside Browser', () => {
+    
+    test('Get User Agent from Navitagor', async ({ page }) => {
         await page.goto('https://www.google.com/');
-        var result = await page.evaluate(() => `Browser User-Agent: ${navigator.userAgent}`);
-        console.log(result);
+        const userAgent = await page.evaluate(() => navigator.userAgent);;
+        expect(userAgent).not.toBeUndefined();
     });
 
 });

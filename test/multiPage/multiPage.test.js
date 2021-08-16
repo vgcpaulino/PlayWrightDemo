@@ -1,40 +1,51 @@
-import { getBrowser } from '../../helpers/browserLauncher.helper';
+const { test, expect } = require('@playwright/test');
 
-let browser;
+test.describe('Multi Pages', () => {
 
-describe('Multi Pages', () => {
+    test(`Open two Browser Windows (same browser, different context)`, async ({ browser }) => {
+        const homeUrl = 'https://the-internet.herokuapp.com/';
+        const homePage = await browser.newPage();
+        await homePage.goto(homeUrl);
 
-    beforeEach(async () => {
-        browser = await getBrowser();
+        const loginUrl = 'https://the-internet.herokuapp.com/login';
+        const loginPage = await browser.newPage();
+        await loginPage.goto(loginUrl);
+
+        await expect(homePage).toHaveURL(homeUrl);
+        await expect(loginPage).toHaveURL(loginUrl);
+
+        expect(homePage).not.toMatchObject(loginPage);
+        
+        const homePageContext = homePage.context();
+        const loginPageContext = loginPage.context();
+        expect(homePageContext).not.toMatchObject(loginPageContext);
+        
+        const homePageBrowser = homePageContext.browser();
+        const loginPageBrowser = loginPageContext.browser();
+        expect(homePageBrowser).toMatchObject(loginPageBrowser);
     });
 
-    it(`Open two Browser windows`, async () => {
-        const page1 = await browser.newPage();
-        const page2 = await browser.newPage();
-        await page1.goto("https://the-internet.herokuapp.com/");
-        await page2.goto("https://the-internet.herokuapp.com/login");
-    });
+    test(`Open two Browser Tabs (same browser, same context)`, async ({ context }) => {
+        const homeUrl = 'https://the-internet.herokuapp.com/';
+        const homePage = await context.newPage();
+        await homePage.goto(homeUrl);
 
-    it(`Open two Browser tabs`, async () => {
-        const context = await browser.newContext();
-        const page1 = await context.newPage();
-        const page2 = await context.newPage();
-        await page1.goto("https://the-internet.herokuapp.com/");
-        await page2.goto("https://the-internet.herokuapp.com/login");
-    });
+        const loginUrl = 'https://the-internet.herokuapp.com/login';
+        const loginPage = await context.newPage();
+        await loginPage.goto(loginUrl);
 
-    it(`Open two Browser tabs - Selecting Active`, async () => {
-        const context = await browser.newContext();
-        const page1 = await context.newPage();
-        const page2 = await context.newPage();
-        await page1.goto("https://the-internet.herokuapp.com/");
-        await page2.goto("https://the-internet.herokuapp.com/login");
-        await page1.bringToFront();
-        await page2.bringToFront();
-    });
+        await expect(homePage).toHaveURL(homeUrl);
+        await expect(loginPage).toHaveURL(loginUrl);
 
-    afterEach(async () => {
-        await browser.close();
+        expect(homePage).not.toMatchObject(loginPage);
+
+        const homePageContext = homePage.context();
+        const loginPageContext = loginPage.context();
+        expect(homePageContext).toMatchObject(loginPageContext);
+        
+        const homePageBrowser = homePageContext.browser();
+        const loginPageBrowser = loginPageContext.browser();
+        expect(homePageBrowser).toMatchObject(loginPageBrowser);
     });
 
 });
