@@ -5,6 +5,8 @@
   "scripts": {
     "allure": "allure generate ./allure-result --clean && allure open ./allure-report",
     "test": "npx playwright test",
+    "test:visual": "npx playwright test --grep=@visual",
+    "test:visual:update": "npx playwright test --grep=@visual --update-snapshots",
     "test:allure": "npx playwright test --reporter=line,experimental-allure-playwright",
     "test:desktop": "npx playwright test --project=desktop",
     "test:mobile": "npx playwright test --project=mobile"
@@ -19,5 +21,5 @@
     "dotenv": "^10.0.0",
     "experimental-allure-playwright": "0.0.3",
     "playwright": "^1.14.0"
-  },
+  }
 }

@@ -1,8 +1,8 @@
 const { test, expect } = require('@playwright/test');
 
-test.describe('Verify Requests', () => {
+test.describe('Verify Requests @net', () => {
 
-    test(`Intercept`, async ({ page }) => {
+    test(`Intercept @net`, async ({ page }) => {
         const mockResponseObject = [
             {
                 id: 1,
