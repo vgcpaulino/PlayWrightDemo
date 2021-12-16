@@ -1,4 +1,4 @@
-const { ElementHandle, Frame, Page } = require('playwright');
+const { ElementHandle, Frame, Page } = require('@playwright/test');
 
 module.exports = class FramesPage {
 

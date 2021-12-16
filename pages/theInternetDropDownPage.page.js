@@ -1,4 +1,4 @@
-const { ElementHandle, Page } = require('playwright');
+const { ElementHandle, Page } = require('@playwright/test');
 
 module.exports = class DropDownPage {
     

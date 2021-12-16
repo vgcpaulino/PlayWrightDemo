@@ -1,4 +1,4 @@
-const { devices } = require('playwright');
+const { devices } = require('@playwright/test');
 
 let config = {
   use: {

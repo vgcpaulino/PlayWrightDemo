@@ -1,5 +1,5 @@
 const { test, expect } = require('@playwright/test');
-const { devices } = require('playwright');
+const { devices } = require('@playwright/test');
 const iPhone11 = devices['iPhone 11 Pro'];
 
 const contextConfig = {

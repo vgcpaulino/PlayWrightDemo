@@ -9,17 +9,17 @@
     "test:visual:update": "npx playwright test --grep=@visual --update-snapshots",
     "test:allure": "npx playwright test --reporter=line,experimental-allure-playwright",
     "test:desktop": "npx playwright test --project=desktop",
-    "test:mobile": "npx playwright test --project=mobile"
+    "test:mobile": "npx playwright test --project=mobile",
+    "test:16": "npx playwright test -g 'Tests Playwright v 1.16'"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.14.0",
+    "@playwright/test": "^1.17.1",
     "allure-commandline": "^2.13.8",
     "axe-core": "^4.3.1",
     "dotenv": "^10.0.0",
-    "experimental-allure-playwright": "0.0.3",
-    "playwright": "^1.14.0"
+    "experimental-allure-playwright": "0.0.3"
   }
 }
