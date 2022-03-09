@@ -1,4 +1,4 @@
-const { test, expect } = require('@playwright/test');
+import { test, expect, Cookie } from '@playwright/test';
 
 test.describe('Cookies', () => {
 
@@ -18,7 +18,7 @@ test.describe('Cookies', () => {
             domain: ".guru99.com",
             path: '/',
             sameSite: 'Lax'
-        });
+        } as Cookie);
 
         await context.addCookies(browserCookies);
         const cookies = await context.cookies();

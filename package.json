@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "allure": "allure generate ./allure-result --clean && allure open ./allure-report",
+    "allure": "allure generate ./allure-results --clean && allure open ./allure-report",
     "test": "npx playwright test",
     "test:visual": "npx playwright test --grep=@visual",
     "test:visual:update": "npx playwright test --grep=@visual --update-snapshots",
@@ -16,10 +16,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.17.1",
+    "@playwright/test": "^1.18.0",
     "allure-commandline": "^2.13.8",
     "axe-core": "^4.3.1",
     "dotenv": "^10.0.0",
     "experimental-allure-playwright": "0.0.3"
+  },
+  "dependencies": {
+    "allure-playwright": "^2.0.0-beta.15"
   }
 }

@@ -1,17 +1,12 @@
-const { ElementHandle, Page } = require('@playwright/test');
+import { Page } from "@playwright/test";
 
-module.exports = class DropDownPage {
-    
-    /**
-     * @param {Page} page 
-     */
-    constructor(page) {
+export class DropDownPage {
+    readonly page: Page;
+
+    constructor(page: Page) {
         this.page = page;
     }
 
-    /**
-     * @returns {ElementHandle}
-     */
     async dropdown() { 
         return await this.page.waitForSelector('select[id="dropdown"]'); 
     };

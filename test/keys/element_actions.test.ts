@@ -1,7 +1,7 @@
-const { test, expect } = require('@playwright/test');
-const LoginPage = require('../../pages/theInternetLogin.page');
-const KeyPressesPage = require('../../pages/theInternetKeyPresses.page');
-const { getElementAttribute, getElementValue } = require('../../helpers/elementAttributes.helper');
+import { test, expect } from '@playwright/test';
+import { LoginPage } from '../../pages/theInternetLogin.page';
+import { KeyPressesPage } from '../../pages/theInternetKeyPresses.page';
+import { getElementAttribute, getElementValue } from '../../helpers/elementAttributes.helper';
 
 test.describe('Element Interaction', () => {
 

@@ -1,11 +1,11 @@
-const { ElementHandle, Frame, Page } = require('@playwright/test');
+import { Page } from "@playwright/test";
 
-module.exports = class FramesPage {
+const { ElementHandle, Frame } = require('@playwright/test');
 
-    /**
-     * @param {Page} page 
-     */
-    constructor(page) { 
+export class FramesPage {
+    readonly page: Page;
+
+    constructor(page: Page) { 
         this.page = page;
     }
 

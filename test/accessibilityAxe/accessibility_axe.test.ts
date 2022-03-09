@@ -1,5 +1,5 @@
-const { test, expect } = require('@playwright/test');
-const { source: axeSource } = require('axe-core');
+import { test, expect } from '@playwright/test';
+import { source as axeSource } from 'axe-core';
 
 test.describe('Accessibility Axe', () => {
     

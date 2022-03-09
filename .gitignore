@@ -1,6 +1,8 @@
 node_modules
 screenshots/**
 videos/**
+allure-report/*
+allure-results/*
 
 # Logs
 logs

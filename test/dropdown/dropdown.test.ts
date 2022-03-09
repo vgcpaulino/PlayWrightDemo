@@ -1,7 +1,7 @@
-const { test, expect } = require('@playwright/test');
-const DropDownPage = require('../../pages/theInternetDropDownPage.page');
+import { test, expect } from '@playwright/test';
+import { DropDownPage } from '../../pages/theInternetDropDownPage.page';
 
-let dropDownPage;
+let dropDownPage: DropDownPage;
 
 test.describe('Dropdown', () => {
 

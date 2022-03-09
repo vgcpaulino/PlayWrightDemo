@@ -1,32 +1,18 @@
-const { ElementHandle, Page } = require('@playwright/test');
+import { Page } from "@playwright/test";
 
-module.exports = class LoginPage {    
+export class LoginPage {    
+    readonly page: Page;
     
-    /**
-     * @param {Page} page 
-     */
-    constructor(page) { 
+    constructor(page: Page) { 
         this.page = page;
     }
 
-    /**
-     * @returns {ElementHandle}
-     */
     async userNameInput() { return await this.page.waitForSelector('#username'); };
     
-    /**
-     * @returns {ElementHandle}
-     */
     async passwordInput() { return await this.page.waitForSelector('#password'); };
     
-    /**
-     * @returns {ElementHandle}
-     */
     async loginBtn() { return await this.page.waitForSelector('#login > button'); };
     
-    /**
-     * @returns {ElementHandle}
-     */
     async loginConfirmation() { return await this.page.waitForSelector('div[id="flash"]'); };
 
     async openPage() {

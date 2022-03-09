@@ -1,5 +1,5 @@
 
-const { test, expect, request } = require('@playwright/test');
+import { test, expect, request } from '@playwright/test';
 
 let apiRequest, result, resultBody;
 
@@ -25,7 +25,7 @@ test.describe('Tests Playwright v 1.17', () => {
     test('APIs', async ({ page }, testInfo) => {
         await page.goto('http://the-internet.herokuapp.com/iframe');
         const titlePath = testInfo.titlePath;
-        expect(titlePath).toStrictEqual(["test/versions/1.17.test.js", "Tests Playwright v 1.17", "APIs"]);
+        expect(titlePath).toStrictEqual(["test/versions/1.17.test.ts", "Tests Playwright v 1.17", "APIs"]);
 
         const parallelIndex = testInfo.parallelIndex;
         expect(typeof parallelIndex).toBe('number');

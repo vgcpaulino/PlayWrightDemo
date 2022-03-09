@@ -1,7 +1,7 @@
-const { test, expect } = require('@playwright/test');
-const AlertsPage = require('../../pages/theInternetAlerts.page');
+import { test, expect } from '@playwright/test';
+import { AlertsPage } from '../../pages/theInternetAlerts.page';
 
-let dialogsPage;
+let dialogsPage: AlertsPage;
 
 test.describe('Working with Dialogs.', () => {
     

@@ -1,7 +1,7 @@
-const { test, expect } = require('@playwright/test');
-const FramesPage = require('../../pages/theInternetFrames.pages');
+import { test, expect } from '@playwright/test';
+import { FramesPage } from '../../pages/theInternetFrames.pages';
 
-let framesPage;
+let framesPage: FramesPage;
 
 test.describe('Frames Interaction', () => {
 

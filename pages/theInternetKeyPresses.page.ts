@@ -1,11 +1,14 @@
-const { ElementHandle, Page } = require('@playwright/test');
+import { Page } from "@playwright/test";
 
-module.exports = class KeyPressesPage {
-    
+const { ElementHandle } = require('@playwright/test');
+
+export class KeyPressesPage {
+    readonly page: Page;
+
     /**
      * @param {Page} page 
      */
-    constructor(page) {
+    constructor(page: Page) {
         this.page = page;
     }
 
@@ -23,10 +26,10 @@ module.exports = class KeyPressesPage {
         await this.page.goto("https://the-internet.herokuapp.com/key_presses");
     }
 
-    async pressKeyLogResult(key) {
-        await (await this.input()).press(key);
-        var resultText = await result.textContent();
-        console.log(`Key Press Result: ${resultText}`);
-    }
+    // async pressKeyLogResult(key) {
+    //     await (await this.input()).press(key);
+    //     var resultText = await result.textContent();
+    //     console.log(`Key Press Result: ${resultText}`);
+    // }
 
 }

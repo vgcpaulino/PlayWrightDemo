@@ -1,4 +1,4 @@
-const { test, expect } = require('@playwright/test');
+import { test, expect } from '@playwright/test';
 
 test.describe('Locators Vs ElementHandle', () => {
     test('Re Query', async ({ page }) => {
