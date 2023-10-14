@@ -1,29 +1,22 @@
 import { Page } from "@playwright/test";
 
-const { ElementHandle } = require('@playwright/test');
-
 export class KeyPressesPage {
     readonly page: Page;
 
-    /**
-     * @param {Page} page 
-     */
     constructor(page: Page) {
         this.page = page;
     }
 
-    /**
-     * @returns {ElementHandle}
-     */
-    async input() { return await this.page.$('input[id="target"]'); };
-    
-    /**
-     * @returns {ElementHandle}
-     */
-    async result() { return await this.page.$('p[id="result"]'); };
+    openPage() {
+        return this.page.goto("https://the-internet.herokuapp.com/key_presses");
+    }
 
-    async openPage() {
-        await this.page.goto("https://the-internet.herokuapp.com/key_presses");
+    input() {
+        return this.page.locator('input[id="target"]');
+    }
+
+    result() {
+        return this.page.locator('p[id="result"]');
     }
 
     // async pressKeyLogResult(key) {
@@ -31,5 +24,4 @@ export class KeyPressesPage {
     //     var resultText = await result.textContent();
     //     console.log(`Key Press Result: ${resultText}`);
     // }
-
 }

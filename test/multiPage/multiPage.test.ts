@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test.describe.skip("Multi Pages", () => {
+test.describe("Multi Pages", () => {
     test(`Open two Browser Windows (same browser, different context)`, async ({
         browser,
     }) => {

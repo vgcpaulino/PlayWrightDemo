@@ -1,43 +1,34 @@
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../pages/theInternetLogin.page';
-import { KeyPressesPage } from '../../pages/theInternetKeyPresses.page';
-import { getElementAttribute, getElementValue } from '../../helpers/elementAttributes.helper';
+import { test, expect } from "@playwright/test";
+import { LoginPage } from "../../pages/theInternetLogin.page";
+import { KeyPressesPage } from "../../pages/theInternetKeyPresses.page";
+import {
+    getElementAttribute,
+    getElementValue,
+} from "../../helpers/elementAttributes.helper";
 
-test.describe('Element Interaction', () => {
+test.describe("Element Interaction", () => {
+    test(`Type / Click / Get Attributes`, async ({ page }) => {
+        const loginPage = new LoginPage(page);
 
-  test(`Type / Click / Get Attributes`, async ({ page }) => {
-    const loginPage = new LoginPage(page);
-    await loginPage.openPage();
+        await loginPage.openPage();
+        await loginPage.userNameInput().pressSequentially("tomsmith");
+        await loginPage
+            .passwordInput()
+            .pressSequentially("SuperSecretPassword!");
 
-    const userNameInput = await loginPage.userNameInput();
-    const userPasswordInput = await loginPage.passwordInput();
-    const loginBtn = await loginPage.loginBtn();
+        expect(await loginPage.userNameInput().inputValue()).toBe("tomsmith");
+        await expect(loginPage.userNameInput()).not.toBeFocused();
 
-    await userNameInput.type('tomsmith');
-    await userPasswordInput.type('SuperSecretPassword!');
+        await loginPage.loginBtn().click();
 
-    const userNameInputText = await getElementValue(userNameInput);
-    expect(userNameInputText).toBe('tomsmith');
+        await expect(loginPage.loginConfirmation()).toBeVisible();
+    });
 
-    const userNameInputAutoFocus = await getElementAttribute(page, userNameInput, 'autofocus');
-    expect(userNameInputAutoFocus).toBeFalsy();
+    test(`Key Press / Text Content`, async ({ page }) => {
+        const keyPresses = new KeyPressesPage(page);
+        await keyPresses.openPage();
+        await keyPresses.input().press("Control");
 
-    await loginBtn.click();
-    const loginConfirmation = await loginPage.loginConfirmation();
-    const isVisible = await loginConfirmation.isVisible();
-    expect(isVisible).toBeTruthy();
-  });
-
-  test(`Key Press / Text Content`, async ({ page }) => {
-    const keyPresses = new KeyPressesPage(page);
-    await keyPresses.openPage();
-
-    const input = await keyPresses.input();
-    await input.press('Control');
-    
-    const result = await keyPresses.result();
-    const resultText = await result.textContent();
-    expect(resultText).toBe('You entered: CONTROL');
-  });
-
+        await expect(keyPresses.result()).toHaveText("You entered: CONTROL");
+    });
 });

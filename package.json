@@ -14,7 +14,8 @@
         "test:allure": "npx playwright test --reporter=line,experimental-allure-playwright",
         "test:desktop": "npx playwright test --project=desktop",
         "test:mobile": "npx playwright test --project=mobile",
-        "test:16": "npx playwright test -g 'Tests Playwright v 1.16'"
+        "test:16": "npx playwright test -g 'Tests Playwright v 1.16'",
+        "ui-mode": "npx playwright test --ui"
     },
     "keywords": [],
     "author": "",
