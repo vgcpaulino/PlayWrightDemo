@@ -7,12 +7,12 @@ export class DropDownPage {
         this.page = page;
     }
 
-    async dropdown() { 
-        return await this.page.waitForSelector('select[id="dropdown"]'); 
-    };
+    async dropdown() {
+        return await this.page.waitForSelector('select[id="dropdown"]');
+    }
 
     async openPage() {
-        await this.page.goto('https://the-internet.herokuapp.com/dropdown');
+        await this.page.goto("https://the-internet.herokuapp.com/dropdown");
     }
 
     async selectOptionById(id) {
@@ -20,16 +20,18 @@ export class DropDownPage {
     }
 
     async selectOptionByLabel(label) {
-        await selectOption(await this.dropdown(), { label: label});
+        await selectOption(await this.dropdown(), { label: label });
     }
 
     async getSelectedOptionValue() {
         const dropDown = await this.dropdown();
-        const selectedOpt = await (await dropDown.$('option[selected="selected"]')).textContent();
+        const selectedOpt = await (
+            await dropDown.$('option[selected="selected"]')
+        ).textContent();
         return selectedOpt;
-    }    
+    }
 }
 
 async function selectOption(element, option) {
-    await element.selectOption(option); 
+    await element.selectOption(option);
 }

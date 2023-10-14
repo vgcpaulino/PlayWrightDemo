@@ -3,9 +3,8 @@ version: "3"
 services:
 
   docker-playwright:
-    image: mcr.microsoft.com/playwright:v1.14.0-bionic
+    image: mcr.microsoft.com/playwright:v1.39.0-focal
     container_name: docker-playwright
-    volumes: 
+    volumes:
       - ./:/app
-    command: bash -c "cd app
-      && npx playwright test"
+    command: bash -c "cd app && npx playwright test"

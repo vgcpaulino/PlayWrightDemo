@@ -1,6 +1,0 @@
-<testsuites id="" name="" tests="1" failures="0" skipped="0" errors="0" time="3.664">
-<testsuite name="test/geolocation/geolocation.test.ts" timestamp="1643217022031" hostname="" tests="1" failures="0" skipped="0" time="3.367" errors="0">
-<testcase name="Geolocation Test Google Maps" classname="[Desktop] › test/geolocation/geolocation.test.ts:16:5 › Geolocation Test › Google Maps" time="3.367">
-</testcase>
-</testsuite>
-</testsuites>
