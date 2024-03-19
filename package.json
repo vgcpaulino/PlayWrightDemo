@@ -14,20 +14,26 @@
         "test:allure": "npx playwright test --reporter=line,experimental-allure-playwright",
         "test:desktop": "npx playwright test --project=desktop",
         "test:mobile": "npx playwright test --project=mobile",
-        "test:16": "npx playwright test -g 'Tests Playwright v 1.16'",
+        "test:16": "npx playwright test -g 'Tests Playwright v1.16'",
+        "test:17": "npx playwright test -g 'Tests Playwright v1.17'",
         "ui-mode": "npx playwright test --ui"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "devDependencies": {
-        "@playwright/test": "1.39.0",
+        "@playwright/test": "^1.42.1",
+        "@stylistic/eslint-plugin-ts": "^1.7.0",
+        "@typescript-eslint/eslint-plugin": "^7.2.0",
+        "@typescript-eslint/parser": "^7.2.0",
         "allure-commandline": "^2.13.8",
+        "allure-playwright": "^2.0.0-beta.15",
         "axe-core": "^4.3.1",
         "dotenv": "^10.0.0",
-        "experimental-allure-playwright": "0.0.3"
-    },
-    "dependencies": {
-        "allure-playwright": "^2.0.0-beta.15"
+        "eslint": "^8.57.0",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-plugin-playwright": "^1.5.2",
+        "experimental-allure-playwright": "0.0.3",
+        "typescript": "^5.4.2"
     }
 }

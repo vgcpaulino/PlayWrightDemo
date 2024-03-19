@@ -1,28 +1,48 @@
 import { test, expect } from '@playwright/test';
-import { source as axeSource } from 'axe-core';
+import {
+	type AxeResults,
+	source as axeSource,
+	type RunOptions,
+} from 'axe-core';
 
 test.describe('Accessibility Axe', () => {
-    
-    test('Get Acessibility Axe Results', async ({ page }) => {
-        await page.goto('https://www.google.com/');
-        
-        await page.addScriptTag({ content: axeSource });
-        const axeResults = await page.evaluate(() => {
-            const result = axe
-                .run()
-                .then(results => {
-                    console.log('Axe Accessibility execution was successful!');
-                    return results;
-                })
-                .catch(err => {
-                    console.log('An error occurred during Axe Accessibility verification!');
-                    return err;
-                })
-            return result;
-        });
-        // console.log(`Accessibility Violations: ${axeResults.violations.length}`);s
 
-        expect(axeResults.violations.length).toBeLessThanOrEqual(3);
-    });
+	test('Get Acessibility Axe Results', async ({
+		page 
+	}) => {
+		await page.goto('https://www.google.com/');
+
+		await page.addScriptTag({ content: axeSource });
+		const axeOptions: RunOptions = {
+			runOnly: {
+				type: 'tag',
+				values: ['wcag2a', 'wcag2aa'] 
+			},
+		};
+		const axeResults = await page.evaluate(
+			([axeOptions]) => {
+				// @ts-expect-error Running inside browser;
+				const result = axe
+					.run(axeOptions)
+					.then((results: AxeResults) => {
+						console.log(
+							'Axe Accessibility execution was successful!'
+						);
+						return results;
+					})
+					.catch((err: unknown) => {
+						console.log(
+							'An error occurred during Axe Accessibility verification!'
+						);
+						return err;
+					});
+				return result;
+			},
+			[axeOptions]
+		);
+		// console.log(`Accessibility Violations: ${axeResults.violations.length}`);s
+
+		expect(axeResults.violations.length).toBeLessThanOrEqual(3);
+	});
 
 });

@@ -3,7 +3,7 @@ version: "3"
 services:
 
   docker-playwright:
-    image: mcr.microsoft.com/playwright:v1.39.0-focal
+    image: mcr.microsoft.com/playwright:v1.42.1-focal
     container_name: docker-playwright
     volumes:
       - ./:/app
