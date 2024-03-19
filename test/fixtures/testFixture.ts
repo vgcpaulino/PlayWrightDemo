@@ -1,9 +1,13 @@
-import { test as pw, expect } from "@playwright/test";
-import { test } from "../../globals/customTest";
+import { expect } from '@playwright/test';
+import { test } from '../../globals/customTest';
 
-pw.describe("Geolocation Test", () => {
-    test("test 1", async ({ page, fullName }) => {
-        expect(fullName).toBe("John Doe");
-        expect(fullName).toBe("Joh");
-    });
+test.describe('Fixture Test', () => {
+
+	test('Receives Properties', async ({
+		fullName 
+	}) => {
+		expect(fullName).toBe('John Doe');
+		expect(fullName).toBe('Joh');
+	});
+
 });
